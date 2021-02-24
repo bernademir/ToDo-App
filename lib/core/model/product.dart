@@ -23,10 +23,11 @@ class Product {
 
 class ProductList {
   List<Product> products = [];
-  ProductList.fromJsonList(value) {
-    products = value.map((key, value) {
+  ProductList.fromJsonList(Map value) {
+    value.forEach((key, value) {
       var product = Product.fromJson(value);
       product.key = key;
-    }).toList();
+      products.add(product);
+    });
   }
 }

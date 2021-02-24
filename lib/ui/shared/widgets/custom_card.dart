@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/ui/shared/styles/text_styles.dart';
 
 class CustomCard extends StatelessWidget {
   final String title;
@@ -13,7 +14,7 @@ class CustomCard extends StatelessWidget {
     return Card(
       elevation: 20,
       child: ListTile(
-        title: Text(this.title),
+        title: Text(this.title, style: titleStyle),
         subtitle: Text(this.subtitle),
         trailing: imagePlace,
       ),

@@ -7,12 +7,12 @@ import 'package:todoapp/core/model/product.dart';
 class ApiService {
   String _baseUrl;
 
-  ApiService _instance = ApiService._privateContructor();
+  static ApiService _instance = ApiService._privateContructor();
   ApiService._privateContructor() {
     _baseUrl = "https://flutter-todo-e70fb-default-rtdb.firebaseio.com/";
   }
 
-  ApiService getInstance() {
+  static ApiService getInstance() {
     if (_instance == null) {
       return ApiService._privateContructor();
     }
@@ -27,6 +27,22 @@ class ApiService {
       case HttpStatus.ok:
         final productList = ProductList.fromJsonList(jsonResponse);
         return productList.products;
+        break;
+      case HttpStatus.unauthorized:
+        print("error");
+        break;
+    }
+    return Future.error(jsonResponse);
+  }
+
+  Future<void> addProducts(Product product) async {
+    final jsonBody = product.toJson();
+    final response = await http.post("$_baseUrl/product.json", body: jsonBody);
+    final jsonResponse = json.decode(response.body);
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return Future.value(true);
         break;
       case HttpStatus.unauthorized:
         print("error");
